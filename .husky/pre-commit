@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 1. Перевірка типів для всього проєкту (tsc не вміє в lint-staged)
+echo "Checking types..."
+npm run type-check
+
+# 2. Запуск lint-staged для змінених файлів (eslint + prettier)
+echo "Running linters..."
+npx lint-staged
