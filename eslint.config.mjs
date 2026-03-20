@@ -23,44 +23,30 @@ export default tseslint.config(
     settings: {
       react: { version: "detect" },
       "import/resolver": {
-        typescript: true,
-      },
-      "boundaries/elements": [
-        { type: "app", pattern: "src/app" },
-        { type: "pages", pattern: "src/pages" },
-        { type: "widgets", pattern: "src/widgets" },
-        { type: "features", pattern: "src/features" },
-        { type: "entities", pattern: "src/entities" },
-        { type: "shared", pattern: "src/shared" },
-      ],
-      "import/resolver": {
         typescript: {
-          alwaysTryTypes: true,
           project: "./tsconfig.json",
         },
       },
+
+      "boundaries/include": ["src/**/*"],
+
+      "boundaries/elements": [
+        { type: "app", pattern: "src/app/**" },
+        { type: "pages", pattern: "src/pages/**" },
+        { type: "widgets", pattern: "src/widgets/**" },
+        { type: "features", pattern: "src/features/**" },
+        { type: "entities", pattern: "src/entities/**" },
+        { type: "shared", pattern: "src/shared/**" },
+      ],
     },
     rules: {
-      ...reactPlugin.configs.recommended.rules,
-      ...hooksPlugin.configs.recommended.rules,
-      "react/react-in-jsx-scope": "off",
+      "boundaries/no-unknown": "error",
+      "boundaries/no-unknown-files": "error",
 
-      // Сортування імпортів (ESLint не конфліктує тут з Prettier)
-      "import/order": [
-        "error",
-        {
-          groups: ["builtin", "external", "internal", ["parent", "sibling"], "index"],
-          pathGroups: [{ pattern: "@/**", group: "internal", position: "after" }],
-          "newlines-between": "always",
-          alphabetize: { order: "asc", caseInsensitive: true },
-        },
-      ],
-
-      // FSD Boundaries
       "boundaries/element-types": [
         "error",
         {
-          defaultAllow: false,
+          default: "disallow",
           rules: [
             { from: "app", allow: ["pages", "widgets", "features", "entities", "shared"] },
             { from: "pages", allow: ["widgets", "features", "entities", "shared"] },
@@ -71,7 +57,7 @@ export default tseslint.config(
           ],
         },
       ],
-    },
+    }
   },
   eslintConfigPrettier
 );
