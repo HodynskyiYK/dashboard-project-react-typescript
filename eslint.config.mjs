@@ -57,6 +57,25 @@ export default tseslint.config(
           ],
         },
       ],
+      "no-restricted-imports": [
+        "error",
+        {
+          "patterns": [
+            {
+              "group": ["@/pages/*/*"],
+              "message": "Use public API (index.ts)"
+            },
+            {
+              "group": ["@/features/*/*"],
+              "message": "Use public API (index.ts)"
+            },
+            {
+              "group": ["@/entities/*/*"],
+              "message": "Use public API (index.ts)"
+            }
+          ]
+        }
+      ]
     }
   },
   eslintConfigPrettier
